@@ -23,6 +23,7 @@ import PresentToAllIcon from '@material-ui/icons/PresentToAll';
 import FullScreenIcon from '@material-ui/icons/Fullscreen';
 import PeopleIcon from '@material-ui/icons/People';
 import ShowMoreIcon from '@material-ui/icons/MoreVert';
+import SettingsIcon from '@material-ui/icons/Settings';
 import {useHotkeys} from 'react-hotkeys-hook';
 import {Video} from './Video';
 import {makeStyles} from '@material-ui/core/styles';
@@ -49,6 +50,13 @@ const flags = (user: RoomUser) => {
     return ` (${result.join(', ')})`;
 };
 
+enum VideoDisplayMode {
+    FitToWindow= "FitToWindow",
+    FitWidth = "FitWidth",
+    FitHeight = "FitHeight",
+    OriginalSize = "OriginalSize",
+}
+
 export const Room = ({
     state,
     share,
@@ -70,6 +78,8 @@ export const Room = ({
     const [showMore, setShowMore] = React.useState<Element>();
     const [selectedStream, setSelectedStream] = React.useState<string | typeof HostStream>();
     const [videoElement, setVideoElement] = React.useState<HTMLVideoElement | null>(null);
+    const [videoDisplayModeMenu, setVideoDisplayModeMenu] = React.useState<Element>();
+    const [videoDisplayMode, setVideoDisplayMode] = React.useState<VideoDisplayMode>(VideoDisplayMode.FitToWindow);
 
     useShowOnMouseMovement(setShowControl);
 
@@ -168,8 +178,34 @@ export const Room = ({
         [state.clientStreams, selectedStream]
     );
 
+    const videoContainerClasses = () => {
+        switch (videoDisplayMode) {
+            case VideoDisplayMode.FitToWindow:
+                return `${classes.videoContainer} ${classes.videoWindowWidth} ${classes.videoWindowHeight}` ;
+            case VideoDisplayMode.OriginalSize:
+                return classes.videoContainerOriginalSize;
+            case VideoDisplayMode.FitWidth:
+                return classes.videoContainerFillWidth;
+            case VideoDisplayMode.FitHeight:
+                return classes.videoContainerFillHeight;
+        }
+    };
+
+    const videoClasses = () => {
+        switch (videoDisplayMode) {
+            case VideoDisplayMode.FitToWindow:
+                return `${classes.video} ${classes.videoWindowWidth} ${classes.videoWindowHeight}`;
+            case VideoDisplayMode.OriginalSize:
+                return `${classes.video} ${classes.videoOriginalSize}`;
+            case VideoDisplayMode.FitWidth:
+                return `${classes.video} ${classes.videoWindowWidth}`;
+            case VideoDisplayMode.FitHeight:
+                return `${classes.video} ${classes.videoWindowHeight}`;
+        }
+    };
+
     return (
-        <div className={classes.videoContainer}>
+        <div className={videoContainerClasses()}>
             {controlVisible && (
                 <Paper className={classes.title} elevation={10} {...setHoverState}>
                     <Tooltip title="Copy Link">
@@ -185,7 +221,7 @@ export const Room = ({
             )}
 
             {stream ? (
-                <video muted ref={setVideoElement} className={classes.video} />
+                <video muted ref={setVideoElement} className={videoClasses()} />
             ) : (
                 <Typography
                     variant="h4"
@@ -241,6 +277,27 @@ export const Room = ({
                             <FullScreenIcon fontSize="large" />
                         </IconButton>
                     </Tooltip>
+
+                    <Tooltip title="Display mode" arrow>
+                        <IconButton
+                            onClick={(e) => setVideoDisplayModeMenu(e.currentTarget)}
+                            disabled={!selectedStream}
+                        >
+                            <SettingsIcon fontSize="large"/>
+                        </IconButton>
+                    </Tooltip>
+
+                    <Menu
+                        anchorEl={videoDisplayModeMenu}
+                        keepMounted
+                        open={Boolean(videoDisplayModeMenu)}
+                        onClose={() => setVideoDisplayModeMenu(undefined)}>
+                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitToWindow)}>Fit to window</MenuItem>
+                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitWidth)}>Fit width</MenuItem>
+                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitHeight)}>Fit height</MenuItem>
+                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.OriginalSize)}>Original size</MenuItem>
+                    </Menu>
+
                     <Tooltip title="More" arrow>
                         <IconButton onClick={(e) => setShowMore(e.currentTarget)}>
                             <ShowMoreIcon fontSize="large" />
@@ -399,8 +456,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 30,
     },
     video: {
-        maxWidth: '100%',
-        maxHeight: '100%',
         width: 'auto',
         height: 'auto',
 
@@ -423,6 +478,20 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: '300px',
 
         maxHeight: '200px',
+    },
+    videoOriginalSize:{
+        maxWidth: 'auto',
+        maxHeight: 'auto',
+
+        top: 0,
+        left: 0,
+        transform: "none",
+    },
+    videoWindowWidth:{
+        maxWidth: '100%',
+    },
+    videoWindowHeight:{
+        maxHeight: '100%',
     },
     smallVideoLabel: {
         position: 'absolute',
@@ -447,6 +516,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         bottom: 0,
         width: '100%',
         height: '100%',
+    },
+    videoContainerFit:{
         overflow: 'hidden',
+    },
+    videoContainerOriginalSize: {
+        overflow: 'scroll',
+    },
+    videoContainerFillWidth:{
+        overflowX: 'scroll'
+    },
+    videoContainerFillHeight:{
+        overflowY: 'scroll'
     },
 }));
