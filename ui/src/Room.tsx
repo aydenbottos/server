@@ -51,10 +51,10 @@ const flags = (user: RoomUser) => {
 };
 
 enum VideoDisplayMode {
-    FitToWindow= "FitToWindow",
-    FitWidth = "FitWidth",
-    FitHeight = "FitHeight",
-    OriginalSize = "OriginalSize",
+    FitToWindow = 'FitToWindow',
+    FitWidth = 'FitWidth',
+    FitHeight = 'FitHeight',
+    OriginalSize = 'OriginalSize',
 }
 
 export const Room = ({
@@ -79,7 +79,9 @@ export const Room = ({
     const [selectedStream, setSelectedStream] = React.useState<string | typeof HostStream>();
     const [videoElement, setVideoElement] = React.useState<HTMLVideoElement | null>(null);
     const [videoDisplayModeMenu, setVideoDisplayModeMenu] = React.useState<Element>();
-    const [videoDisplayMode, setVideoDisplayMode] = React.useState<VideoDisplayMode>(VideoDisplayMode.FitToWindow);
+    const [videoDisplayMode, setVideoDisplayMode] = React.useState<VideoDisplayMode>(
+        VideoDisplayMode.FitToWindow
+    );
 
     useShowOnMouseMovement(setShowControl);
 
@@ -181,7 +183,7 @@ export const Room = ({
     const videoContainerClasses = () => {
         switch (videoDisplayMode) {
             case VideoDisplayMode.FitToWindow:
-                return `${classes.videoContainer} ${classes.videoWindowWidth} ${classes.videoWindowHeight}` ;
+                return `${classes.videoContainer} ${classes.videoWindowWidth} ${classes.videoWindowHeight}`;
             case VideoDisplayMode.OriginalSize:
                 return classes.videoContainerOriginalSize;
             case VideoDisplayMode.FitWidth:
@@ -281,9 +283,8 @@ export const Room = ({
                     <Tooltip title="Display mode" arrow>
                         <IconButton
                             onClick={(e) => setVideoDisplayModeMenu(e.currentTarget)}
-                            disabled={!selectedStream}
-                        >
-                            <SettingsIcon fontSize="large"/>
+                            disabled={!selectedStream}>
+                            <SettingsIcon fontSize="large" />
                         </IconButton>
                     </Tooltip>
 
@@ -292,10 +293,19 @@ export const Room = ({
                         keepMounted
                         open={Boolean(videoDisplayModeMenu)}
                         onClose={() => setVideoDisplayModeMenu(undefined)}>
-                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitToWindow)}>Fit to window</MenuItem>
-                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitWidth)}>Fit width</MenuItem>
-                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitHeight)}>Fit height</MenuItem>
-                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.OriginalSize)}>Original size</MenuItem>
+                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitToWindow)}>
+                            Fit to window
+                        </MenuItem>
+                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitWidth)}>
+                            Fit width
+                        </MenuItem>
+                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitHeight)}>
+                            Fit height
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => setVideoDisplayMode(VideoDisplayMode.OriginalSize)}>
+                            Original size
+                        </MenuItem>
                     </Menu>
 
                     <Tooltip title="More" arrow>
@@ -479,18 +489,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 
         maxHeight: '200px',
     },
-    videoOriginalSize:{
+    videoOriginalSize: {
         maxWidth: 'auto',
         maxHeight: 'auto',
 
         top: 0,
         left: 0,
-        transform: "none",
+        transform: 'none',
     },
-    videoWindowWidth:{
+    videoWindowWidth: {
         maxWidth: '100%',
     },
-    videoWindowHeight:{
+    videoWindowHeight: {
         maxHeight: '100%',
     },
     smallVideoLabel: {
@@ -517,16 +527,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         height: '100%',
     },
-    videoContainerFit:{
+    videoContainerFit: {
         overflow: 'hidden',
     },
     videoContainerOriginalSize: {
         overflow: 'scroll',
     },
-    videoContainerFillWidth:{
-        overflowX: 'scroll'
+    videoContainerFillWidth: {
+        overflowX: 'scroll',
     },
-    videoContainerFillHeight:{
-        overflowY: 'scroll'
+    videoContainerFillHeight: {
+        overflowY: 'scroll',
     },
 }));
