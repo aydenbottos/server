@@ -23,7 +23,6 @@ import PresentToAllIcon from '@material-ui/icons/PresentToAll';
 import FullScreenIcon from '@material-ui/icons/Fullscreen';
 import PeopleIcon from '@material-ui/icons/People';
 import ShowMoreIcon from '@material-ui/icons/MoreVert';
-import SettingsIcon from '@material-ui/icons/Settings';
 import {useHotkeys} from 'react-hotkeys-hook';
 import {Video} from './Video';
 import {makeStyles} from '@material-ui/core/styles';
@@ -78,7 +77,6 @@ export const Room = ({
     const [showMore, setShowMore] = React.useState<Element>();
     const [selectedStream, setSelectedStream] = React.useState<string | typeof HostStream>();
     const [videoElement, setVideoElement] = React.useState<HTMLVideoElement | null>(null);
-    const [videoDisplayModeMenu, setVideoDisplayModeMenu] = React.useState<Element>();
     const [videoDisplayMode, setVideoDisplayMode] = React.useState<VideoDisplayMode>(
         VideoDisplayMode.FitToWindow
     );
@@ -280,19 +278,17 @@ export const Room = ({
                         </IconButton>
                     </Tooltip>
 
-                    <Tooltip title="Display mode" arrow>
-                        <IconButton
-                            onClick={(e) => setVideoDisplayModeMenu(e.currentTarget)}
-                            disabled={!selectedStream}>
-                            <SettingsIcon fontSize="large" />
+                    <Tooltip title="More" arrow>
+                        <IconButton onClick={(e) => setShowMore(e.currentTarget)}>
+                            <ShowMoreIcon fontSize="large" />
                         </IconButton>
                     </Tooltip>
 
                     <Menu
-                        anchorEl={videoDisplayModeMenu}
+                        anchorEl={showMore}
                         keepMounted
-                        open={Boolean(videoDisplayModeMenu)}
-                        onClose={() => setVideoDisplayModeMenu(undefined)}>
+                        open={Boolean(showMore)}
+                        onClose={() => setShowMore(undefined)}>
                         <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitToWindow)}>
                             Fit to window
                         </MenuItem>
@@ -306,19 +302,6 @@ export const Room = ({
                             onClick={() => setVideoDisplayMode(VideoDisplayMode.OriginalSize)}>
                             Original size
                         </MenuItem>
-                    </Menu>
-
-                    <Tooltip title="More" arrow>
-                        <IconButton onClick={(e) => setShowMore(e.currentTarget)}>
-                            <ShowMoreIcon fontSize="large" />
-                        </IconButton>
-                    </Tooltip>
-
-                    <Menu
-                        anchorEl={showMore}
-                        keepMounted
-                        open={Boolean(showMore)}
-                        onClose={() => setShowMore(undefined)}>
                         <MenuItem
                             onClick={() => {
                                 setShowMore(undefined);
