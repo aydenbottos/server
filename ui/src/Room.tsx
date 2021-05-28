@@ -56,6 +56,19 @@ enum VideoDisplayMode {
     OriginalSize = 'OriginalSize',
 }
 
+const defaultVideoDisplayMode = (): VideoDisplayMode => {
+    switch (localStorage.getItem('videoDisplayMode')) {
+        case 'FitWidth':
+            return VideoDisplayMode.FitWidth;
+        case 'FitHeight':
+            return VideoDisplayMode.FitHeight;
+        case 'OriginalSize':
+            return VideoDisplayMode.OriginalSize;
+        default:
+            return VideoDisplayMode.FitToWindow;
+    }
+};
+
 export const Room = ({
     state,
     share,
@@ -78,8 +91,12 @@ export const Room = ({
     const [selectedStream, setSelectedStream] = React.useState<string | typeof HostStream>();
     const [videoElement, setVideoElement] = React.useState<HTMLVideoElement | null>(null);
     const [videoDisplayMode, setVideoDisplayMode] = React.useState<VideoDisplayMode>(
-        VideoDisplayMode.FitToWindow
+        defaultVideoDisplayMode()
     );
+
+    React.useEffect(() => localStorage.setItem('videoDisplayMode', videoDisplayMode), [
+        videoDisplayMode,
+    ]);
 
     useShowOnMouseMovement(setShowControl);
 
