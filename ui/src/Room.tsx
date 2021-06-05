@@ -195,25 +195,12 @@ export const Room = ({
         [state.clientStreams, selectedStream]
     );
 
-    const videoContainerClasses = () => {
-        switch (videoDisplayMode) {
-            case VideoDisplayMode.FitToWindow:
-                return `${classes.videoContainer} ${classes.videoWindowWidth} ${classes.videoWindowHeight}`;
-            case VideoDisplayMode.OriginalSize:
-                return classes.videoContainerOriginalSize;
-            case VideoDisplayMode.FitWidth:
-                return classes.videoContainerFillWidth;
-            case VideoDisplayMode.FitHeight:
-                return classes.videoContainerFillHeight;
-        }
-    };
-
     const videoClasses = () => {
         switch (videoDisplayMode) {
             case VideoDisplayMode.FitToWindow:
-                return `${classes.video} ${classes.videoWindowWidth} ${classes.videoWindowHeight}`;
+                return `${classes.video} ${classes.videoWindowFit}`;
             case VideoDisplayMode.OriginalSize:
-                return `${classes.video} ${classes.videoOriginalSize}`;
+                return `${classes.video}`;
             case VideoDisplayMode.FitWidth:
                 return `${classes.video} ${classes.videoWindowWidth}`;
             case VideoDisplayMode.FitHeight:
@@ -222,7 +209,7 @@ export const Room = ({
     };
 
     return (
-        <div className={videoContainerClasses()}>
+        <div className={classes.videoContainer}>
             {controlVisible && (
                 <Paper className={classes.title} elevation={10} {...setHoverState}>
                     <Tooltip title="Copy Link">
@@ -466,13 +453,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 30,
     },
     video: {
-        width: 'auto',
-        height: 'auto',
-
         position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%,-50%)',
 
         '&::-webkit-media-controls-start-playback-button': {
             display: 'none!important',
@@ -489,19 +470,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 
         maxHeight: '200px',
     },
-    videoOriginalSize: {
-        maxWidth: 'auto',
-        maxHeight: 'auto',
+    videoWindowFit: {
+        width: '100%',
+        height: '100%',
 
-        top: 0,
-        left: 0,
-        transform: 'none',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
     },
     videoWindowWidth: {
-        maxWidth: '100%',
+        height: 'auto',
+        width: '100%',
     },
     videoWindowHeight: {
-        maxHeight: '100%',
+        height: '100%',
+        width: 'auto',
     },
     smallVideoLabel: {
         position: 'absolute',
@@ -526,17 +510,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         bottom: 0,
         width: '100%',
         height: '100%',
-    },
-    videoContainerFit: {
-        overflow: 'hidden',
-    },
-    videoContainerOriginalSize: {
-        overflow: 'scroll',
-    },
-    videoContainerFillWidth: {
-        overflowX: 'scroll',
-    },
-    videoContainerFillHeight: {
-        overflowY: 'scroll',
+
+        overflow: 'auto',
     },
 }));
