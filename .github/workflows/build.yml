@@ -23,7 +23,7 @@ jobs:
           restore-keys: ${{ runner.os }}-node_modules-
       - uses: actions/checkout@v2
       - run: go mod download
-      - run: (cd ui && yarn)
+      - run: (cd ui && yarn --frozen-lockfile)
       - run: (cd ui && yarn prettier --version)
       - run: (cd ui && yarn build)
       - run: (cd ui && yarn testformat)
