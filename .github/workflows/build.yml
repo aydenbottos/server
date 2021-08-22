@@ -19,6 +19,7 @@ jobs:
       - run: go mod download
       - run: yarn cache clean
       - run: (cd ui && yarn --frozen-lockfile)
+      - run: (cd ui && yarn list --pattern prettier)
       - run: (cd ui && yarn prettier --version)
       - run: (cd ui && yarn build)
       - run: (cd ui && yarn testformat)
