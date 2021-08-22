@@ -17,6 +17,7 @@ jobs:
             ${{ runner.os }}-go-
       - uses: actions/checkout@v2
       - run: go mod download
+      - run: ls -lah ui/node_modules/.bin
       - run: (cd ui && yarn --frozen-lockfile)
       - run: (cd ui && yarn prettier --version)
       - run: (cd ui && yarn build)
