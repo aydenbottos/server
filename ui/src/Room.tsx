@@ -88,6 +88,7 @@ export const Room = ({
     const [showControl, setShowControl] = React.useState(true);
     const [hoverControl, setHoverControl] = React.useState(false);
     const [showMore, setShowMore] = React.useState<Element>();
+    const [showDisplayOptions, setShowDisplayOptions] = React.useState<Element>();
     const [selectedStream, setSelectedStream] = React.useState<string | typeof HostStream>();
     const [videoElement, setVideoElement] = React.useState<HTMLVideoElement | null>(null);
     const [videoDisplayMode, setVideoDisplayMode] = React.useState<VideoDisplayMode>(
@@ -293,25 +294,56 @@ export const Room = ({
                         keepMounted
                         open={Boolean(showMore)}
                         onClose={() => setShowMore(undefined)}>
-                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitToWindow)}>
-                            Fit to window
+                        <MenuItem onClick={(e) => setShowDisplayOptions(e.currentTarget)}>
+                            Display Mode
                         </MenuItem>
-                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitWidth)}>
-                            Fit width
-                        </MenuItem>
-                        <MenuItem onClick={() => setVideoDisplayMode(VideoDisplayMode.FitHeight)}>
-                            Fit height
-                        </MenuItem>
-                        <MenuItem
-                            onClick={() => setVideoDisplayMode(VideoDisplayMode.OriginalSize)}>
-                            Original size
-                        </MenuItem>
+
                         <MenuItem
                             onClick={() => {
                                 setShowMore(undefined);
                                 setOpen(true);
                             }}>
                             Change Name
+                        </MenuItem>
+                    </Menu>
+
+                    <Menu
+                        anchorEl={showDisplayOptions}
+                        keepMounted
+                        open={Boolean(showDisplayOptions)}
+                        onClose={() => setShowDisplayOptions(undefined)}
+                        anchorOrigin={{horizontal: 'right', vertical: 'center'}}>
+                        <MenuItem
+                            onClick={() => {
+                                setVideoDisplayMode(VideoDisplayMode.FitToWindow);
+                                setShowDisplayOptions(undefined);
+                                setShowMore(undefined);
+                            }}>
+                            Fit to window
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => {
+                                setVideoDisplayMode(VideoDisplayMode.FitWidth);
+                                setShowDisplayOptions(undefined);
+                                setShowMore(undefined);
+                            }}>
+                            Fit width
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => {
+                                setVideoDisplayMode(VideoDisplayMode.FitHeight);
+                                setShowDisplayOptions(undefined);
+                                setShowMore(undefined);
+                            }}>
+                            Fit height
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => {
+                                setVideoDisplayMode(VideoDisplayMode.OriginalSize);
+                                setShowDisplayOptions(undefined);
+                                setShowMore(undefined);
+                            }}>
+                            Original size
                         </MenuItem>
                     </Menu>
                 </Paper>
