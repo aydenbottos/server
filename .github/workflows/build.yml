@@ -24,6 +24,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: go mod download
       - run: (cd ui && yarn)
+      - run: (cd ui && yarn prettier --version)
       - run: (cd ui && yarn build)
       - run: (cd ui && yarn testformat)
       - uses: golangci/golangci-lint-action@v2
