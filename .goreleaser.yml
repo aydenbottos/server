@@ -50,9 +50,9 @@ dockers:
     goarch: amd64
     goarm: ''
     image_templates:
-      - "aydenbottos/server:amd64-unstable"
-      - "aydenbottos/server:amd64-{{ .RawVersion }}-audio"
-      - "aydenbottos/server:amd64-{{ .Major }}"
+      - "aydenbottos/screego:amd64-unstable"
+      - "aydenbottos/screego:amd64-{{ .RawVersion }}-audio"
+      - "aydenbottos/screego:amd64-{{ .Major }}"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -63,9 +63,9 @@ dockers:
     goarch: 386
     goarm: ''
     image_templates:
-      - "aydenbottos/server:386-unstable"
-      - "aydenbottos/server:386-{{ .RawVersion }}-audio"
-      - "aydenbottos/server:386-{{ .Major }}"
+      - "aydenbottos/screego:386-unstable"
+      - "aydenbottos/screego:386-{{ .RawVersion }}-audio"
+      - "aydenbottos/screego:386-{{ .Major }}"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -76,9 +76,9 @@ dockers:
     goarch: arm64
     goarm: ''
     image_templates:
-      - "aydenbottos/server:arm64-unstable"
-      - "aydenbottos/server:arm64-{{ .RawVersion }}-audio"
-      - "aydenbottos/server:arm64-{{ .Major }}"
+      - "aydenbottos/screego:arm64-unstable"
+      - "aydenbottos/screego:arm64-{{ .RawVersion }}-audio"
+      - "aydenbottos/screego:arm64-{{ .Major }}"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -89,9 +89,9 @@ dockers:
     goarch: arm
     goarm: 7
     image_templates:
-      - "aydenbottos/server:armv7-unstable"
-      - "aydenbottos/server:armv7-{{ .RawVersion }}-audio"
-      - "aydenbottos/server:armv7-{{ .Major }}"
+      - "aydenbottos/screego:armv7-unstable"
+      - "aydenbottos/screego:armv7-{{ .RawVersion }}-audio"
+      - "aydenbottos/screego:armv7-{{ .Major }}"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -102,9 +102,9 @@ dockers:
     goarch: arm
     goarm: 6
     image_templates:
-      - "aydenbottos/server:armv6-unstable"
-      - "aydenbottos/server:armv6-{{ .RawVersion }}-audio"
-      - "aydenbottos/server:armv6-{{ .Major }}"
+      - "aydenbottos/screego:armv6-unstable"
+      - "aydenbottos/screego:armv6-{{ .RawVersion }}-audio"
+      - "aydenbottos/screego:armv6-{{ .Major }}"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -115,9 +115,9 @@ dockers:
     goarch: ppc64le
     goarm: ''
     image_templates:
-      - "aydenbottos/server:ppc64le-unstable"
-      - "aydenbottos/server:ppc64le-{{ .RawVersion }}-audio"
-      - "aydenbottos/server:ppc64le-{{ .Major }}"
+      - "aydenbottos/screego:ppc64le-unstable"
+      - "aydenbottos/screego:ppc64le-{{ .RawVersion }}-audio"
+      - "aydenbottos/screego:ppc64le-{{ .Major }}"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--label=org.opencontainers.image.created={{.Date}}"
