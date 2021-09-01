@@ -298,9 +298,22 @@ export const useRoom = (): UseRoom => {
         }
         stream.current = await navigator.mediaDevices
             // @ts-ignore
-            .getDisplayMedia({video: true, audio: true});
+            .getDisplayMedia({video: true});
+        
+        audioStream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                sampleSize: 100,
+                frameRate: { max: 30 },
+                noiseSuppression: true,
+                echoCancellation: true,
+                channelCount: 2
+            }
+        });
+        var audioTrack = audioStream.getAudioTracks()[0];
+        
         stream.current?.getVideoTracks()[0].addEventListener('ended', () => stopShare());
         setState((current) => (current ? {...current, hostStream: stream.current} : current));
+        stream.current?.addTrack(audioTrack);
 
         conn.current?.send(JSON.stringify({type: 'share', payload: {}}));
     };
