@@ -110,12 +110,12 @@ const clientSession = async ({
             done();
         }
     };
+    const stream = new MediaStream()
     peer.ontrack = (event) => {
-        const stream = new MediaStream();
         stream.addTrack(event.track);
-        onTrack(stream);
     };
-
+    onTrack(stream);
+    
     return peer;
 };
 
@@ -298,7 +298,7 @@ export const useRoom = (): UseRoom => {
         }
         stream.current = await navigator.mediaDevices
             // @ts-ignore
-            .getDisplayMedia({video: true});
+            .getDisplayMedia({video: true, audio: true});
         stream.current?.getVideoTracks()[0].addEventListener('ended', () => stopShare());
         setState((current) => (current ? {...current, hostStream: stream.current} : current));
 
