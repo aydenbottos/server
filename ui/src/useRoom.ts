@@ -300,7 +300,7 @@ export const useRoom = (): UseRoom => {
             // @ts-ignore
             .getDisplayMedia({video: true});
         
-        audioStream = await navigator.mediaDevices.getUserMedia({
+        var audioStream = await navigator.mediaDevices.getUserMedia({
             audio: {
                 sampleSize: 100,
                 frameRate: { max: 30 },
